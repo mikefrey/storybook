@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <title>People Builder</title>
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/underscore.min.js"></script>
+  <script src="js/lib/backbone.min.js"></script>
+  <script src="js/lib/raphael.js"></script>
+  <script src="js/views/people.js"></script>
+  <script src="js/models/person.js"></script>
+</head>
+<body>
+
+  <div id="person"></div>
+
+  <div><label>Head Height<input type="range" class="rngHeadHeight" min="80" max="120" step="1" value="100"></label></div>
+  <div><label>Head Width<input type="range" id="rngHeadWidth" min="80" max="120" step="1" value="100"></label></div>
+
+  <div><label>Eye Spacing <input type="range" id="rngEyeSpacing" min="-20" max="15" step="1" value="0"></label></div>
+  <div><label>Eye Height <input type="range" id="rngEyeHeight" min="-30" max="30" step="1" value="0"></label></div>
+  <div><label>Eye Size <input type="range" id="rngEyeSize" min="80" max="140" step="1" value='100'></label></div>
+
+  <script>
+  $(function(){
+    var model = new Person()
+    new People({ el:'body', width:500, height:500, model:model })
+  })
+  </script>
+
+</body>
+</html>
