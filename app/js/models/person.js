@@ -13,6 +13,13 @@ var Person = Backbone.Model.extend({
       scale: 1
     })
 
+    this.eyebrows = new Backbone.Model({
+      spacing: 0,
+      height: 0,
+      scale: 1,
+      angle: 0
+    })
+
   }
 
 })
