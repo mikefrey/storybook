@@ -5,13 +5,19 @@ var People = Backbone.View.extend({
   events: {
     'change .rngHeadHeight': 'changeHeadHeight',
     'change #rngHeadWidth': 'changeHeadWidth',
+
     'change #rngEyeSpacing': 'changeEyeSpacing',
     'change #rngEyeHeight': 'changeEyeHeight',
     'change #rngEyeSize': 'changeEyeSize',
+
     'change #rngEyebrowSpacing': 'changeEyebrowSpacing',
     'change #rngEyebrowHeight': 'changeEyebrowHeight',
     'change #rngEyebrowSize': 'changeEyebrowSize',
-    'change #rngEyebrowAngle': 'changeEyebrowAngle'
+    'change #rngEyebrowAngle': 'changeEyebrowAngle',
+
+    'change #rngNoseBalance': 'changeNoseBalance',
+    'change #rngNoseHeight': 'changeNoseHeight',
+    'change #rngNoseSize': 'changeNoseSize'
   },
 
   initialize: function(options) {
@@ -35,8 +41,12 @@ var People = Backbone.View.extend({
     this.eyebrowRight = this.r.rect((cWidth*1.25)-(browWidth/2), cHeight*0.75, browWidth, cHeight*0.05)
     this.eyes = this.r.setFinish()
 
+    var noseWidth = cWidth*0.1
+    this.nose = this.r.rect(cWidth-(noseWidth/2), cHeight+(noseWidth/2), noseWidth, noseWidth)
+
     this.model.eyes.on('change', this.updateEyes, this)
     this.model.eyebrows.on('change', this.updateEyebrows, this)
+    this.model.nose.on('change', this.updateNose, this)
   },
 
   changeHeadHeight: function(ev) {
@@ -109,6 +119,30 @@ var People = Backbone.View.extend({
     var angle = this.model.eyebrows.get('angle')
     this.eyebrowLeft.transform('t'+spacing+','+height+'s'+scale+'r'+angle)
     this.eyebrowRight.transform('t'+(-spacing)+','+height+'s'+scale+'r'+-angle)
+  },
+
+  changeNoseBalance: function(ev) {
+    var cWidth = this.width / 2
+    var val = (ev.target.value / 100) * cWidth
+    this.model.nose.set('balance', val)
+  },
+
+  changeNoseHeight: function(ev) {
+    var cHeight = this.height / 2
+    var val = (ev.target.value / 100) * cHeight
+    this.model.nose.set('height', val)
+  },
+
+  changeNoseSize: function(ev) {
+    var val = ev.target.value / 100
+    this.model.nose.set('scale', val)
+  },
+
+  updateNose: function() {
+    var balance = this.model.nose.get('balance')
+    var height = this.model.nose.get('height')
+    var scale = this.model.nose.get('scale')
+    this.nose.transform('t'+balance+','+height+'s'+scale)
   }
 
 
