@@ -20,6 +20,12 @@ var Person = Backbone.Model.extend({
       angle: 0
     })
 
+    this.nose = new Backbone.Model({
+      balance: 0,
+      height: 0,
+      scale: 1
+    })
+
   }
 
 })
