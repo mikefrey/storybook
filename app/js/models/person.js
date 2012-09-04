@@ -26,6 +26,13 @@ var Person = Backbone.Model.extend({
       scale: 1
     })
 
+    this.mouth = new Backbone.Model({
+      balance: 0,
+      height: 0,
+      scaleX: 1,
+      scaleY: 1
+    })
+
   }
 
 })

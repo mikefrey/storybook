@@ -3,7 +3,7 @@
 var People = Backbone.View.extend({
 
   events: {
-    'change .rngHeadHeight': 'changeHeadHeight',
+    'change #rngHeadHeight': 'changeHeadHeight',
     'change #rngHeadWidth': 'changeHeadWidth',
 
     'change #rngEyeSpacing': 'changeEyeSpacing',
@@ -17,7 +17,12 @@ var People = Backbone.View.extend({
 
     'change #rngNoseBalance': 'changeNoseBalance',
     'change #rngNoseHeight': 'changeNoseHeight',
-    'change #rngNoseSize': 'changeNoseSize'
+    'change #rngNoseSize': 'changeNoseSize',
+
+    'change #rngMouthBalance': 'changeMouthBalance',
+    'change #rngMouthHeight': 'changeMouthHeight',
+    'change #rngMouthScaleX': 'changeMouthScaleX',
+    'change #rngMouthScaleY': 'changeMouthScaleY'
   },
 
   initialize: function(options) {
@@ -44,9 +49,13 @@ var People = Backbone.View.extend({
     var noseWidth = cWidth*0.1
     this.nose = this.r.rect(cWidth-(noseWidth/2), cHeight+(noseWidth/2), noseWidth, noseWidth)
 
+    var mouthWidth = cWidth*0.3
+    this.mouth = this.r.ellipse(cWidth, cHeight*1.5, mouthWidth, mouthWidth/5)
+
     this.model.eyes.on('change', this.updateEyes, this)
     this.model.eyebrows.on('change', this.updateEyebrows, this)
     this.model.nose.on('change', this.updateNose, this)
+    this.model.mouth.on('change', this.updateMouth, this)
   },
 
   changeHeadHeight: function(ev) {
@@ -121,6 +130,7 @@ var People = Backbone.View.extend({
     this.eyebrowRight.transform('t'+(-spacing)+','+height+'s'+scale+'r'+-angle)
   },
 
+
   changeNoseBalance: function(ev) {
     var cWidth = this.width / 2
     var val = (ev.target.value / 100) * cWidth
@@ -143,7 +153,37 @@ var People = Backbone.View.extend({
     var height = this.model.nose.get('height')
     var scale = this.model.nose.get('scale')
     this.nose.transform('t'+balance+','+height+'s'+scale)
-  }
+  },
 
+
+  changeMouthBalance: function(ev) {
+    var cWidth = this.width / 2
+    var val = (ev.target.value / 100) * cWidth
+    this.model.mouth.set('balance', val)
+  },
+
+  changeMouthHeight: function(ev) {
+    var cHeight = this.height / 2
+    var val = (ev.target.value / 100) * cHeight
+    this.model.mouth.set('height', val)
+  },
+
+  changeMouthScaleX: function(ev) {
+    var val = ev.target.value / 100
+    this.model.mouth.set('scaleX', val)
+  },
+
+  changeMouthScaleY: function(ev) {
+    var val = ev.target.value / 100
+    this.model.mouth.set('scaleY', val)
+  },
+
+  updateMouth: function() {
+    var height = this.model.mouth.get('height')
+    var balance = this.model.mouth.get('balance')
+    var scaleX = this.model.mouth.get('scaleX')
+    var scaleY = this.model.mouth.get('scaleY')
+    this.mouth.transform('t'+balance+','+height+'s'+scaleX+','+scaleY)
+  }
 
 })
